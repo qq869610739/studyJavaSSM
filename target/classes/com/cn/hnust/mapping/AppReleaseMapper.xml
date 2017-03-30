@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.hnust.dao.IAppReleaseMapper">
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.AppRelease">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="appName" jdbcType="VARCHAR" property="appname" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="appVersion" jdbcType="VARCHAR" property="appversion" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="releaseVersion" jdbcType="VARCHAR" property="releaseversion" />
+    <result column="versionCode" jdbcType="INTEGER" property="versioncode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, appName, system, appVersion, create_time, releaseVersion, versionCode
+  </sql>
+  <select id="selectByExample" parameterType="com.cn.hnust.pojo.AppReleaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from appRelease
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.cn.hnust.pojo.AppReleaseExample">
+    delete from appRelease
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cn.hnust.pojo.AppRelease">
+    insert into appRelease (id, appName, system, 
+      appVersion, create_time, releaseVersion, 
+      versionCode)
+    values (#{id,jdbcType=VARCHAR}, #{appname,jdbcType=VARCHAR}, #{system,jdbcType=VARCHAR}, 
+      #{appversion,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{releaseversion,jdbcType=VARCHAR}, 
+      #{versioncode,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.AppRelease">
+    insert into appRelease
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appname != null">
+        appName,
+      </if>
+      <if test="system != null">
+        system,
+      </if>
+      <if test="appversion != null">
+        appVersion,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="releaseversion != null">
+        releaseVersion,
+      </if>
+      <if test="versioncode != null">
+        versionCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="appname != null">
+        #{appname,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null">
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="appversion != null">
+        #{appversion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseversion != null">
+        #{releaseversion,jdbcType=VARCHAR},
+      </if>
+      <if test="versioncode != null">
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cn.hnust.pojo.AppReleaseExample" resultType="java.lang.Long">
+    select count(*) from appRelease
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update appRelease
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appname != null">
+        appName = #{record.appname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.system != null">
+        system = #{record.system,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appversion != null">
+        appVersion = #{record.appversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.releaseversion != null">
+        releaseVersion = #{record.releaseversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versioncode != null">
+        versionCode = #{record.versioncode,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update appRelease
+    set id = #{record.id,jdbcType=VARCHAR},
+      appName = #{record.appname,jdbcType=VARCHAR},
+      system = #{record.system,jdbcType=VARCHAR},
+      appVersion = #{record.appversion,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      releaseVersion = #{record.releaseversion,jdbcType=VARCHAR},
+      versionCode = #{record.versioncode,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
